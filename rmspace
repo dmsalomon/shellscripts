@@ -1,0 +1,9 @@
+#!/bin/bash
+
+if [[ $# -eq 0 ]]; then
+	sed -e 's/[[:space:]]*$//'
+else
+	for file; do
+		sed -i -e 's/[[:space:]]*$//' "$file"
+	done
+fi

@@ -1,0 +1,11 @@
+#!/bin/bash
+
+bak="${1?'missing file operand'}.bak"
+
+# recursion !!
+[ -e "$bak" ] && bak "$bak"
+
+# this way we preserve original modification time
+mv "$1" "$bak"
+cp "$bak" "$1"
+

@@ -1,0 +1,12 @@
+#!/bin/bash
+
+if [ $# -eq 0 ]
+then
+	mv * .. && rmdthis
+else
+	for dir
+	do
+		cd $dir && mv * $OLDPWD && rmdthis
+		cd $OLDPWD
+	done
+fi

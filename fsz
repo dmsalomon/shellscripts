@@ -1,0 +1,7 @@
+#!/bin/bash
+
+[ -n "$1" ] && dir="$1" && shift || dir="."
+[ -n "$1" ] && names="-name $1" && shift || names=
+
+for name; do names="$names -o -name $name"; done
+find $dir -type f $names | xargs -d'\n' du -s | sort -nr

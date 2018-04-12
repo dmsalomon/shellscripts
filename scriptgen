@@ -1,0 +1,15 @@
+#!/bin/bash
+
+for file in ~/.config/bash/functions/*sh
+do
+	script=$(awk -F'.' '{
+		x = NR+1
+		for (i=1; i<x; i++)
+			printf "%s.", $i
+		printf "%s", $x
+	}' <<< $file)
+	script=$(sed -e 's/functions/scripts/' <<< $script)
+	~/.config/bash/genscripts $file > $script
+	rmspace $script
+	chmod +x $script
+done

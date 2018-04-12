@@ -1,0 +1,31 @@
+#!/bin/bash
+
+case $OSTYPE in
+linux*)
+	if [ -f /etc/os-release ]; then
+		. /etc/os-release
+	fi
+
+	case $ID in
+	arch)
+		if command -v packer > /dev/null; then
+			packer -Syu --noconfirm
+		else
+			sudo pacman -Syu
+		fi
+		;;
+	ubuntu)
+		sudo apt-get update &&
+		sudo apt-get -y upgrade
+		;;
+	*)
+		echo This linux is not supported
+		exit 1
+	esac
+	;;
+darwin*)
+	brew update && brew upgrade
+	;;
+esac
+
+sudo -k

@@ -1,0 +1,23 @@
+#!/bin/bash
+
+ps auxc |
+	awk -v pat="${1?}" '
+	BEGIN {
+		pat = tolower(pat)
+	}
+	NR == 1 {
+		header = $0
+		next
+	}
+	tolower($11) ~ pat {
+		if (!hits)
+			print header
+		hits++
+		print $0
+	}
+	END {
+		#if (hits)
+		#	printf "%d match%s found\n", hits, (hits == 1 ? "" : "es")
+		if (!hits)
+			exit 1
+	}'
