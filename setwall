@@ -1,0 +1,6 @@
+#!/bin/bash
+
+f=$(readlink -f "$1")
+l="$HOME/.config/i3/wall"
+[ -n "$f" ] && ln -sf "$f" "$l"
+i3-msg restart
