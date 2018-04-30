@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env zsh
 
 if [[ $# -eq 0 ]]; then
 	sed -e 's/[[:space:]]*$//'

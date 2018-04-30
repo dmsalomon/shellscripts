@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env zsh
 
 # Feed script a url.
 # If an image, it will view in feh,

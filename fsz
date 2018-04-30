@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env zsh
 
 [ -n "$1" ] && dir="$1" && shift || dir="."
 [ -n "$1" ] && names="-name $1" && shift || names=

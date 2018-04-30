@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env zsh
 
 f=$(readlink -f "$1")
 l="$HOME/.config/i3/wall"

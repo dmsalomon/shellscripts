@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env zsh
 
 bak="${1?'missing file operand'}.bak"
 

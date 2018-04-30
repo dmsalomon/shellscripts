@@ -1,3 +1,3 @@
-#!/bin/bash
+#!/usr/bin/env zsh
 
 cd "$@" && ls

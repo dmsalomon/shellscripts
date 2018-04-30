@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env zsh
 
 # remove audio until the first occurence of a
 # 0.1 second burst of sound above 1% volume
