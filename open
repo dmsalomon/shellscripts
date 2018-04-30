@@ -4,7 +4,12 @@ emulate -L zsh
 setopt shwordsplit
 
 if type open_command >/dev/null; then
-	(open_command "$@" &>/dev/null &)
+	case "$OSTYPE" in
+	darwin*)
+		command open "$@" &>/dev/null ;;
+	*)
+		(open_command "$@" &>/dev/null &) ;;
+	esac
 else
 	echo "not implemented yet"
 fi
