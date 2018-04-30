@@ -1,0 +1,10 @@
+#!/usr/bin/env zsh
+
+emulate -L zsh
+setopt shwordsplit
+
+if type open_command >/dev/null; then
+	(open_command "$@" &>/dev/null &)
+else
+	echo "not implemented yet"
+fi
