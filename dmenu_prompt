@@ -4,5 +4,7 @@
 # For example:
 # `./prompt "Do you want to shutdown?" "shutdown -h now"`
 
+setopt sh_word_split
+
 [ $(echo -e "No\nYes" | dmenu -i -p "$1" ) \= "Yes" ] && $2
 
