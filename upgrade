@@ -28,6 +28,7 @@ darwin*)
 	;;
 esac
 
+sudo -k
+
 type upgrade_oh_my_zsh >/dev/null && upgrade_oh_my_zsh
 
-sudo -k
