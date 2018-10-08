@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 
-[ -z "$1" ] && vpnconf='nyc' || vpnconf="$1"
+[ -z "$1" ] && vpnconf='default' || vpnconf="$1"
 
 if systemctl is-active openvpn-client@$vpnconf &>/dev/null; then
 	echo -n stopping...
