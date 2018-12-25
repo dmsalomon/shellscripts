@@ -1,8 +1,5 @@
 #!/usr/bin/env zsh
 
-emulate -L zsh
-setopt shwordsplit
-
 if type open_command >/dev/null; then
 	case "$OSTYPE" in
 	darwin*)
