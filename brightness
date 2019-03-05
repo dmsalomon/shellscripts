@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 [ $# = 1 ] || exit 1
 
@@ -9,19 +9,20 @@ cur=$(cat $devpath/brightness)
 op=${1:0:1}
 number=${1:1}
 
-disp=$(($number*$max/100))
-if [[ $disp = 0 ]]; then
-	exit 1
-fi
-
 if [[ $op = + ]]; then
-	cur=$(($cur+$disp))
+	disp=$(($number*$max/100))
+	new=$(($cur+$disp))
 elif [[ $op == - ]]; then
-	cur=$(($cur-$disp))
+	disp=$(($number*$max/100))
+	new=$(($cur-$disp))
+else
+	new=$(($1*$max/100))
 fi
 
-if [[ $cur -lt 0 ]]; then
-	cur=0
+if [[ $new -lt 0 ]]; then
+	new=0
+elif [[ $new -gt $max ]]; then
+	new=$max
 fi
 
-echo $cur | sudo tee $devpath/brightness > /dev/null
+echo $new | sudo -A tee $devpath/brightness > /dev/null

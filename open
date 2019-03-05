@@ -1,7 +1,4 @@
-#!/usr/bin/env zsh
-
-emulate -L zsh
-setopt shwordsplit
+#!/bin/sh
 
 if type open_command >/dev/null; then
 	case "$OSTYPE" in

@@ -1,4 +1,4 @@
-#!/usr/bin/env zsh
+#!/bin/sh
 
 [ -z "$1" ] && vpnconf='nyc' || vpnconf="$1"
 

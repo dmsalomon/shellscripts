@@ -1,0 +1,5 @@
+#!/bin/sh
+# Give dmenu list of all unicode characters to copy.
+# Shows the selected character in dunst if running.
+
+grep -v "#" ~/.scripts/.emoji | dmenu -i | awk '{print $1}' | tr -d '\n' | xclip -selection primary

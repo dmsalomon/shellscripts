@@ -1,4 +1,5 @@
-#/bin/bash
+#!/bin/bash
+#
 # paswitch 2011-02-02 by Ng Oon-Ee <ngoonee.talk@gmail.com>
 
 # I can't remember where I found this script, can't locate the original author.
@@ -33,7 +34,7 @@ for CARD in $cards; do
   fi
   count=$((count+1))
 done
-pacmd "set-default-sink $nextsc" # switch default sound card to next 
+pacmd "set-default-sink $nextsc" # switch default sound card to next
 
 # $inputs: A list of currently playing inputs
 inputs=$(pacmd list-sink-inputs | awk '$1 == "index:" {print $2}')
@@ -44,7 +45,7 @@ done
 # $nextscdec: The device.description of the new default sound card
 # NOTE: This is the most likely thing to break in future, the awk lines may need playing around with
 nextscdesc=$(pacmd list-sinks | awk '$1 == "device.description" {print substr($0,5+length($1 $2))}' \
-                         | sed 's|"||g' | awk -F"," 'NR==v1{print$0}' v1=$((nextind+1))) 
+                         | sed 's|"||g' | awk -F"," 'NR==v1{print$0}' v1=$((nextind+1)))
 
 #notify-send "Default sound-card changed to $nextscdesc"
 #dbus-send --session --type=method_call --reply-timeout=10000 \

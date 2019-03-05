@@ -1,8 +1,0 @@
-#!/usr/bin/env zsh
-
-font="slant"
-case $USER in
-	root) echo -n $RED; figlet -f $font root;;
-	*) figlet -f $font $USER;;
-esac
-echo -n $RESET
