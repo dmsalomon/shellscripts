@@ -1,6 +1,11 @@
-#!/bin/sh
+#!/bin/bash
 
-in=${1?}
-[ -n "$2" ] && out="$2" || out="$in".pdf
-enscript -B -C -Ec -fCourier10 --word-wrap -MLetter -p - "$in" |
-	ps2pdf - $out
+file="${1?'No file given'}"
+ext="${file##*.}"
+lang="${2:-$ext}"
+font="${3:-Courier10}"
+out="${file%.*}.pdf"
+[[ -e "$out" ]] && bak "$out"
+enscript -B -C -E"$lang" -f"$font" --word-wrap -MLetter -p - "$file" |
+	ps2pdf - "$out"
+
