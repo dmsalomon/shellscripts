@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 [ $# = 1 ] || exit 1
 
@@ -10,13 +10,13 @@ op=${1:0:1}
 number=${1:1}
 
 if [[ $op = + ]]; then
-	disp=$(($number*$max/100))
-	new=$(($cur+$disp))
-elif [[ $op == - ]]; then
-	disp=$(($number*$max/100))
-	new=$(($cur-$disp))
+	disp=$((number*max/100))
+	new=$((cur+disp))
+elif [[ $op = - ]]; then
+	disp=$((number*max/100))
+	new=$((cur-disp))
 else
-	new=$(($1*$max/100))
+	new=$(($1*max/100))
 fi
 
 if [[ $new -lt 0 ]]; then
@@ -25,4 +25,4 @@ elif [[ $new -gt $max ]]; then
 	new=$max
 fi
 
-echo $new | sudo -A tee $devpath/brightness > /dev/null
+echo "$new" | sudo -A tee $devpath/brightness > /dev/null

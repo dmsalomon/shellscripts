@@ -3,4 +3,4 @@
 in=${1?}
 [ -n "$2" ] && out="$2" || out="$in".pdf
 enscript -B -C -Ec -fCourier10 --word-wrap -MLetter -p - "$in" |
-	ps2pdf - $out
+	ps2pdf - "$out"

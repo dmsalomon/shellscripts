@@ -4,4 +4,4 @@
 [ -n "$1" ] && names="-name $1" && shift || names=
 
 for name; do names="$names -o -name $name"; done
-find $dir -type f $names 2>/dev/null | xargs -d'\n' du -s 2>/dev/null | sort -n
+find $dir -0 -type f "$names" 2>/dev/null | xargs -0 -d'\n' du -s 2>/dev/null | sort -n

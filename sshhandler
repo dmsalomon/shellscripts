@@ -1,5 +1,5 @@
 #!/bin/bash
 
 opts=$(echo "$1" | awk -F'//' '{print $2}' | awk -F: '{printf "%s -p %s", $1, $2}')
-echo $opts
+echo "$opts"
 termite -e "ssh $opts"

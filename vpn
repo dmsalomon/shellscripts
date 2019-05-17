@@ -2,12 +2,11 @@
 
 [ -z "$1" ] && vpnconf='default' || vpnconf="$1"
 
-if systemctl is-active openvpn-client@$vpnconf &>/dev/null; then
-	echo -n stopping...
-	sudo systemctl stop openvpn-client@$vpnconf
-	echo done
+if systemctl is-active "openvpn-client@$vpnconf" >/dev/null 2>&1; then
+	printf "stopping..."
+	sudo systemctl stop "openvpn-client@$vpnconf"
 else
-	echo -n starting...
-	sudo systemctl start openvpn-client@$vpnconf
-	echo done
+	printf "starting..."
+	sudo systemctl start "openvpn-client@$vpnconf"
 fi
+printf "done\n"

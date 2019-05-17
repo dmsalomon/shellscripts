@@ -1,15 +1,15 @@
 #!/bin/sh
 
-case $OSTYPE in
-linux*)
+case "$(uname)" in
+Linux*)
 	if [ -f /etc/os-release ]; then
 		. /etc/os-release
 	fi
 
 	case $ID in
 	arch)
-		if command -v packer > /dev/null; then
-			packer -Syu --noconfirm
+		if command -v yay > /dev/null; then
+			yay -Syu --noconfirm
 		else
 			sudo pacman -Syu
 		fi
@@ -19,16 +19,15 @@ linux*)
 		sudo apt-get -y upgrade
 		;;
 	*)
-		echo This linux is not supported
+		echo This linux distro is not supported
 		exit 1
 	esac
 	;;
-darwin*)
+Darwin*)
 	brew update && brew upgrade
 	;;
 esac
 
 sudo -k
-
-type upgrade_oh_my_zsh >/dev/null && upgrade_oh_my_zsh
+type upgrade_oh_my_zsh >/dev/null 2>&1 && upgrade_oh_my_zsh
 

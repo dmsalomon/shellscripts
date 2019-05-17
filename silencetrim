@@ -4,4 +4,4 @@
 # 0.1 second burst of sound above 1% volume
 # silence takes 3 args: periods, duration, threshold
 
-sox "$1" silencetrim.${1##*.} silence 1 0.1 1%
+sox "$1" "silencetrim.${1##*.}" silence 1 0.1 1%
