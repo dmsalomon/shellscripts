@@ -3,9 +3,8 @@
 bak="${1?'missing file operand'}.bak"
 
 # recursion !!
+# backup the backups as necessary
 [ -e "$bak" ] && bak "$bak"
 
 # this way we preserve original modification time
-mv "$1" "$bak"
-cp "$bak" "$1"
-
+mv "$1" "$bak" && cp "$bak" "$1"
