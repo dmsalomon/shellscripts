@@ -3,6 +3,9 @@
 [ $# = 1 ] || exit 1
 
 devpath=/sys/class/backlight/intel_backlight
+
+[ -d "$devpath" ] || exit 2
+
 max=$(cat $devpath/max_brightness)
 cur=$(cat $devpath/brightness)
 
