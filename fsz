@@ -1,7 +1,9 @@
 #!/bin/sh
 
-[ -n "$1" ] && dir="$1" && shift || dir="."
-[ -n "$1" ] && names="-name $1" && shift || names=
+set -o noglob
+[ -n "$1" ] && dir="$1" && shift
+[ -n "$1" ] && names="-name $1" && shift
+for name; do names="$names -print0 -o -name $name"; done
 
-for name; do names="$names -o -name $name"; done
-find $dir -0 -type f "$names" 2>/dev/null | xargs -0 -d'\n' du -s 2>/dev/null | sort -n
+# don't quote $dir and $names to allow for empty variables and word splitting
+find $dir -type f $names -print0 2>/dev/null | xargs -0 -r du -h 2>/dev/null | sort -h
