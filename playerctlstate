@@ -1,0 +1,23 @@
+#!/bin/sh
+
+pf="/tmp/playerctlstate"
+
+for player in $(playerctl -l); do
+	status=$(playerctl -p "$player" status)
+	if [ "$status" = "Playing" ]; then
+		echo "$player" > "$pf"
+		playerctl -p "$player" pause
+		stopped="true"
+	fi
+done
+
+st=$?
+[ -n "$stopped" ] && exit $st
+
+if [ -e "$pf" ]; then
+	player=$(cat "$pf")
+	playerctl -p "$player" play || playerctl play-pause
+else
+	playerctl play-pause
+fi
+
