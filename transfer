@@ -20,7 +20,6 @@ if tty -s; then
 	fi
 else
 	if [ "${1##*.}" = "gpg" ]; then
-		export GPG_TTY=$(tty)
 		gpg -ac -o- | curl -#T- "$host/$1" | tee /dev/null
 	else
 		curl -#T- "$host/$1" | tee /dev/null
