@@ -4,24 +4,19 @@ if [ -z "$1" ]; then
 	echo " ... | transfer <file_name>" >&2
 	exit 1
 fi
-host="https://tx.dovsalomon.com"
+host="https://tx.dov.ms"
 if tty -s; then
 	file="$1"
 	file_name="$(basename "$file")"
 	if [ ! -e "$file" ]; then
-		echo "$file: No such file or directory" >&2
-		exit 1
-	fi
-	if [ -d "$file" ]; then
+		echo "^C to cancel, ^D to send." >&2
+		curl -sT- "$host/$1" | tee /dev/null
+	elif [ -d "$file" ]; then
 		file_name="$file_name.zip"
 		(cd "$file" && zip -r -q - .) | curl -#T- "$host/$file_name" | tee /dev/null
 	else
-		curl -#T- "$host/$file_name" <"$file" | tee /dev/null
+		curl -#T "$file" "$host/$file_name" | tee /dev/null
 	fi
 else
-	if [ "${1##*.}" = "gpg" ]; then
-		gpg -ac -o- | curl -#T- "$host/$1" | tee /dev/null
-	else
-		curl -#T- "$host/$1" | tee /dev/null
-	fi
+	curl -#T- "$host/$1" | tee /dev/null
 fi
