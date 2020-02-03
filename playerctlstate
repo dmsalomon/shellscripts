@@ -6,18 +6,15 @@ for player in $(playerctl -l); do
 	status=$(playerctl -p "$player" status)
 	if [ "$status" = "Playing" ]; then
 		echo "$player" > "$pf"
-		playerctl -p "$player" pause
-		stopped="true"
+		playerctl -p "$player" "$@"
+		exit $?
 	fi
 done
 
-st=$?
-[ -n "$stopped" ] && exit $st
-
 if [ -e "$pf" ]; then
 	player=$(cat "$pf")
-	playerctl -p "$player" play || playerctl play-pause
+	playerctl -p "$player" "$@" || playerctl "$@"
 else
-	playerctl play-pause
+	playerctl "$@"
 fi
 

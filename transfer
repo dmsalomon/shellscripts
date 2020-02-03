@@ -4,7 +4,7 @@ if [ -z "$1" ]; then
 	echo " ... | transfer <file_name>" >&2
 	exit 1
 fi
-host="https://tx.dov.ms"
+host="https://ix.dov.ms"
 if tty -s; then
 	file="$1"
 	file_name="$(basename "$file")"
