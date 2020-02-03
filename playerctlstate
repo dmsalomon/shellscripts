@@ -3,6 +3,7 @@
 pf="/tmp/playerctlstate"
 
 for player in $(playerctl -l); do
+	[ -z "$player" ] && continue
 	status=$(playerctl -p "$player" status)
 	if [ "$status" = "Playing" ]; then
 		echo "$player" > "$pf"
