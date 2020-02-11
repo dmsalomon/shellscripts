@@ -4,18 +4,20 @@ pf="/tmp/playerctlstate"
 
 for player in $(playerctl -l); do
 	[ -z "$player" ] && continue
-	status=$(playerctl -p "$player" status)
+	status="$(playerctl -p "$player" status)"
 	if [ "$status" = "Playing" ]; then
 		echo "$player" > "$pf"
 		playerctl -p "$player" "$@"
-		exit $?
+		exit
 	fi
 done
 
-if [ -e "$pf" ]; then
-	player=$(cat "$pf")
-	playerctl -p "$player" "$@" || playerctl "$@"
+if [ -f "$pf" ]; then
+	player="$(cat "$pf")"
+	playerctl -p "$player" "$@" || {
+		rm -f "$pf"
+		playerctl "$@"
+	}
 else
 	playerctl "$@"
 fi
-
