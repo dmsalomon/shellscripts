@@ -7,17 +7,30 @@ for player in $(playerctl -l); do
 	status="$(playerctl -p "$player" status)"
 	if [ "$status" = "Playing" ]; then
 		echo "$player" > "$pf"
-		playerctl -p "$player" "$@"
-		exit
+		exec playerctl -p "$player" "$@"
 	fi
 done
 
 if [ -f "$pf" ]; then
 	player="$(cat "$pf")"
-	playerctl -p "$player" "$@" || {
-		rm -f "$pf"
-		playerctl "$@"
-	}
+	if [ -z "$player" ] || {
+		status="$(playerctl -p "$player" status)";
+		[ "$status" = "Stopped" ] ||
+			! playerctl -p "$player" "$@"
+	}; then
+		rm -r "$pf"
+		playerctlstate "$@" &&
+			echo "$player" > "$pf"
+	fi
 else
-	playerctl "$@"
+	for player in $(playerctl -l); do
+		[ -z "$player"  ] && continue
+		status="$(playerctl -p "$player" status)"
+		if [ "$status" != "Stopped" ]; then
+			playerctl -p "$player" "$@" &&
+				echo "$player" > "$pf"
+			exit
+		fi
+	done
+	exec playerctl "$@"
 fi
