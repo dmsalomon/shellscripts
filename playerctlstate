@@ -2,7 +2,7 @@
 
 pf="/tmp/playerctlstate"
 
-for player in $(playerctl -l); do
+for player in $(playerctl -l 2>/dev/null); do
 	[ -z "$player" ] && continue
 	status="$(playerctl -p "$player" status)"
 	if [ "$status" = "Playing" ]; then
@@ -14,16 +14,16 @@ done
 if [ -f "$pf" ]; then
 	player="$(cat "$pf")"
 	if [ -z "$player" ] || {
-		status="$(playerctl -p "$player" status)";
+		status="$(playerctl -p "$player" status 2>/dev/null)";
 		[ "$status" = "Stopped" ] ||
 			! playerctl -p "$player" "$@"
 	}; then
-		rm -r "$pf"
+		rm -f "$pf"
 		playerctlstate "$@" &&
 			echo "$player" > "$pf"
 	fi
 else
-	for player in $(playerctl -l); do
+	for player in $(playerctl -l 2>/dev/null); do
 		[ -z "$player"  ] && continue
 		status="$(playerctl -p "$player" status)"
 		if [ "$status" != "Stopped" ]; then
