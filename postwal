@@ -2,5 +2,5 @@
 
 ln -sf "$(cat "${HOME}/.cache/wal/wal")" ~/.wal
 bspc wm -r 2>/dev/null
-cd "${HOME}/Documents/dmenu
+cd "${HOME}/Documents/dmenu"
 make clean && make && sudo make install

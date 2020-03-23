@@ -19,8 +19,7 @@ if [ -f "$pf" ]; then
 			! playerctl -p "$player" "$@"
 	}; then
 		rm -f "$pf"
-		playerctlstate "$@" &&
-			echo "$player" > "$pf"
+		exec playerctlstate "$@"
 	fi
 else
 	for player in $(playerctl -l 2>/dev/null); do
