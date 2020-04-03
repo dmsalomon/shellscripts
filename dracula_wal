@@ -1,0 +1,32 @@
+#!/usr/bin/env python3
+
+import pywal
+
+image = pywal.image.get('/home/dms/.wal')
+colors = pywal.colors.get(image)
+
+colors['special']['foreground'] = '#f8f8f2'
+colors['special']['background'] = '#282a36'
+colors['special']['cursorcolor'] = '#93a1a1'
+colors['colors']['color0'] = '#000000'
+colors['colors']['color8'] = '#4d4d4d'
+colors['colors']['color1'] = '#ff5555'
+colors['colors']['color9'] = '#ff6e67'
+colors['colors']['color2'] = '#50fa7b'
+colors['colors']['color10'] = '#5af78e'
+colors['colors']['color3'] = '#f1fa8c'
+colors['colors']['color11'] = '#f4f99d'
+colors['colors']['color4'] = '#bd93f9'
+colors['colors']['color12'] = '#caa9fa'
+colors['colors']['color5'] = '#ff79c6'
+colors['colors']['color13'] = '#ff92d0'
+colors['colors']['color6'] = '#8be9fd'
+colors['colors']['color14'] = '#9aedfe'
+colors['colors']['color7'] = '#bfbfbf'
+colors['colors']['color15'] = '#e6e6e6'
+
+pywal.sequences.send(colors, vte_fix=False)
+pywal.export.every(colors)
+pywal.reload.env()
+
+print(colors)
