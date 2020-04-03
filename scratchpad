@@ -1,0 +1,16 @@
+#!/bin/sh
+
+d=$(xdo id -n dropdown) || {
+  spawn st -n dropdown -e tmux
+  d=$(xdo id -m -n dropdown)
+  echo "$d"
+}
+
+dd=$(bspc query -D -n "$d")
+dn=$(bspc query -D -d focused)
+
+if [ "$dd" = "$dn" ]; then
+  bspc node "$d" -g hidden -f
+else
+  bspc node "$d" -d focused -g hidden=off -f
+fi
