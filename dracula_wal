@@ -1,13 +1,21 @@
 #!/usr/bin/env python3
 
 import pywal
+import sys
 
-image = pywal.image.get('/home/dms/.wal')
+if len(sys.argv) > 1:
+    f = sys.argv[1]
+else:
+    with open('/home/dms/.cache/wal/wal') as h:
+        f = h.read()
+
+image = pywal.image.get(f)
 colors = pywal.colors.get(image)
 
 colors['special']['foreground'] = '#f8f8f2'
 colors['special']['background'] = '#282a36'
 colors['special']['cursorcolor'] = '#93a1a1'
+colors['special']['selection'] = '#44475a'
 colors['colors']['color0'] = '#000000'
 colors['colors']['color8'] = '#4d4d4d'
 colors['colors']['color1'] = '#ff5555'
