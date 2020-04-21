@@ -1,0 +1,39 @@
+#!/bin/sh
+
+pm() { pulsemixer "$@" --max-volume 100; }
+alias ps=playerctlstate
+
+case "${1:?no action}" in
+# volume
+mute)
+	pm --mute;;
+unmute)
+	pm --unmute;;
+toggle)
+	pm --toggle-mute;;
+[+-]*)
+	pm --change-volume "$1";;
+[0-9]*)
+	v="$1" && [ "$v" -gt 100 ] && v=100
+	pm --set-volume "$v";;
+
+# player
+play)
+	ps play;;
+pause)
+	ps pause;;
+play-pause)
+	ps play-pause;;
+pp)
+	ps play-pause;;
+next)
+	ps next;;
+previous)
+	ps previous;;
+prev)
+	ps previous;;
+
+# error
+*)
+	echo "invalid method" >&2
+esac
