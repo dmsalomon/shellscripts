@@ -14,8 +14,7 @@ toggle)
 [+-]*)
 	pm --change-volume "$1";;
 [0-9]*)
-	v="$1" && [ "$v" -gt 100 ] && v=100
-	pm --set-volume "$v";;
+	pm --set-volume "$1";;
 
 # player
 play)
