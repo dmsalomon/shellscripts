@@ -6,4 +6,4 @@
 # `./dmenuprompt "Do you want to shutdown?" "shutdown -h now"`
 
 # do not quote $@ since we *want* argument splitting
-[ "$(printf "No\nYes" | dmenu -i -p "$1" )" \= "Yes" ] && shift && eval $@
+[ "$(printf "No\nYes" | dmenu -i -p "$1" )" \= "Yes" ] && shift && eval "$@"

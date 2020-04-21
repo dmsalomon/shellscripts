@@ -1,8 +1,8 @@
 #!/bin/sh
 prog="$(basename "$0")"
 if [ -z "$1" ]; then
-	echo "Usage: "$prog" <file|directory>" >&2
-	echo " ... | "$prog" <file_name>" >&2
+	echo "Usage: $prog <file|directory>" >&2
+	echo " ... | $prog <file_name>" >&2
 	exit 1
 fi
 host="https://ix.dov.ms"

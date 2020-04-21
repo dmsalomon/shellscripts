@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if test -d .git; then
+if [ -d .git ]; then
 	ctags --tag-relative=yes -f ./.git/tags -R .
 else
 	ctags -R .

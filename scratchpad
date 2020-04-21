@@ -3,7 +3,6 @@
 d=$(xdo id -n dropdown) || {
   spawn st -n dropdown -e tmux
   d=$(xdo id -m -n dropdown)
-  echo "$d"
 }
 
 dd=$(bspc query -D -n "$d")
