@@ -1,0 +1,31 @@
+#!/bin/sh
+
+file="$(readlink -f "${1?}")"
+base="$(basename "$file")"
+ext="${2?}"
+tex="$base".tex
+pdf="$base".pdf
+
+cat <<EOF >"$tex"
+\documentclass{article}
+\usepackage{minted}
+\usepackage[margin=0.75in]{geometry}
+
+\newcommand{\src}[2]{
+	\inputminted[
+		autogobble,
+		linenos,
+		breaklines,
+		python3=true,
+		style=default,
+		%stripnl,
+		tabsize=8,
+	]
+	{#1}
+	{#2}
+}
+
+\begin{document}
+\src{$2}{$1}
+\end{document}
+EOF
