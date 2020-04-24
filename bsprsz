@@ -1,0 +1,16 @@
+#!/bin/sh
+
+invert() {
+	case "$1" in
+	left) echo right;;
+	right) echo left;;
+	top) echo bottom;;
+	bottom) echo top;;
+	*) exit 1;;
+	esac
+}
+
+dir="$1"
+shift
+
+bspc node -z "$dir" "$@" || bspc node -z "$(invert "$dir")" "$@"

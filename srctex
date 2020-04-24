@@ -1,10 +1,10 @@
 #!/bin/sh
 
-file="$(readlink -f "${1?}")"
-base="$(basename "$file")"
-ext="${2?}"
-tex="$base".tex
-pdf="$base".pdf
+set -e
+
+lang="${1?}"
+shift
+tex=src.tex
 
 cat <<EOF >"$tex"
 \documentclass{article}
@@ -26,6 +26,10 @@ cat <<EOF >"$tex"
 }
 
 \begin{document}
-\src{$2}{$1}
-\end{document}
 EOF
+for arg; do
+	file="$(readlink -f "$arg")"
+	echo "\src{$lang}{$file}" >>"$tex"
+done
+echo "\end{document}" >>"$tex"
+latexmk
