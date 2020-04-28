@@ -1,7 +1,7 @@
 #!/bin/sh
 
 pm() { pulsemixer "$@" --max-volume 100; }
-alias ps=playerctlstate
+alias ps='playerctl -p playerctld'
 
 case "${1:?no action}" in
 # volume
