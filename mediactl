@@ -1,7 +1,10 @@
 #!/bin/sh
 
 pm() { pulsemixer "$@" --max-volume 100; }
-alias ps='playerctl -p playerctld'
+alias ps='playerctl -p playerctld,spotify,chromium,%any'
+alias mc=mediactl
+np() { playerctl -l | grep -v playerctld | wc -l; }
+
 
 case "${1:?no action}" in
 # volume
@@ -31,6 +34,13 @@ previous)
 	ps previous;;
 prev)
 	ps previous;;
+status)
+	ps status;;
+
+shift)
+	playerctld --shift;;
+shiftpp)
+	playerctld --shift-play-pause;;
 
 # error
 *)
