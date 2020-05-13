@@ -1,0 +1,8 @@
+#!/bin/sh
+if [ -n "$FORCE_DEVICE_SCALE_FACTOR" ]; then
+	prog="$1"
+	shift
+	exec "$prog" --force-device-scale-factor="$FORCE_DEVICE_SCALE_FACTOR" "$@"
+else
+	exec "$@"
+fi

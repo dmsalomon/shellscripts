@@ -1,0 +1,4 @@
+#!/bin/sh
+kb="$(which -a keybase-gui | sed -n 2p)"
+[ -n "$kb" ] || exit
+exec fdsf "$kb"

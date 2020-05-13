@@ -1,0 +1,2 @@
+#!/bin/sh
+colorpicker --preview --short --one-shot | xclip
