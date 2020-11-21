@@ -38,9 +38,13 @@ status)
 	ps status;;
 
 shift)
-	playerctld --shift;;
+	playerctld shift;;
 shiftpp)
-	playerctld --shift-play-pause;;
+	playerctl -p playerctld pause &&
+		sleep 0.2 &&
+		playerctld shift &&
+		playerctl -p playerctld play
+	;;
 
 # error
 *)

@@ -1,7 +1,7 @@
 #!/bin/sh
 
 d=$(xdo id -n dropdown) || {
-  spawn st -n dropdown -e tmux
+  spawn st -n dropdown -e "$@"
   d=$(xdo id -m -n dropdown)
 }
 
