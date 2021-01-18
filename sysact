@@ -1,0 +1,18 @@
+#!/bin/sh
+
+# A dmenu wrapper script for system functions
+# taken from https://github.com/lukesmithxyz/voidrice
+
+cmds="\
+Lock_loginctl lock-session
+Leave_bspc quit
+Reset_bspc wm -r
+Sleep_sleep 0.5 && systemctl suspend
+Hibernate_systemctl hybrid-sleep
+Reboot_reboot
+Shutdown_poweroff"
+
+choice="$(echo "$cmds" | cut -d'_' -f 1 | dmenu -i -p "System Menu")" || exit
+
+c="$(echo "$cmds" | grep "^$choice" | cut -d '_' -f2-)"
+eval "$c"

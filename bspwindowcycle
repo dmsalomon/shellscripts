@@ -1,0 +1,9 @@
+#!/bin/sh
+
+case "$1" in
+	next) bspc node -f next.window.local ||
+		while bspc node -f prev.window.local; do :; done ;;
+	prev) bspc node -f prev.window.local ||
+		while bspc node -f next.window.local; do :; done ;;
+	*) exit 1;
+esac
