@@ -5,5 +5,5 @@ url='https://www.archlinux.org/mirrorlist/?country=US&protocol=https&ip_version=
 curl -sL "$url" |
 grep '^#Server' |
 sed -e 's/^#Server/Server/' |
-rankmirrors - > newmirrorlist
+rankmirrors -
 
