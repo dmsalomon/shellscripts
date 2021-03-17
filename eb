@@ -1,0 +1,3 @@
+#!/bin/sh
+. ~/.ebcli-virtual-env/bin/activate
+exec ~/.ebcli-virtual-env/executables/eb "$@"

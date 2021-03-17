@@ -3,10 +3,12 @@
 [ -z "$1" ] && vpnconf='default' || vpnconf="$1"
 
 if systemctl is-active "openvpn-client@$vpnconf" >/dev/null 2>&1; then
-	printf "stopping..."
+	notify-send 'stopping vpn'
 	sudo systemctl stop "openvpn-client@$vpnconf"
+	notify-send 'vpn is down'
 else
-	printf "starting..."
-	sudo systemctl start "openvpn-client@$vpnconf"
+	notify-send 'starting vpn'
+	sudo systemctl start "openvpn-client@$vpnconf" &&
+		notify-send 'vpn is up' ||
+		notify-send -u critical 'vpn error'
 fi
-printf "done\n"

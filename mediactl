@@ -40,10 +40,10 @@ status)
 shift)
 	playerctld shift;;
 shiftpp)
-	playerctl -p playerctld pause &&
-		sleep 0.2 &&
-		playerctld shift &&
-		playerctl -p playerctld play
+	playerctl -p playerctld pause
+	sleep 0.1
+	playerctld shift
+	playerctl -p playerctld play
 	;;
 
 # error
