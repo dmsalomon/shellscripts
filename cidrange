@@ -1,0 +1,13 @@
+#!/usr/bin/python3
+
+import sys
+import ipaddress
+import itertools
+
+for cidr in itertools.islice(sys.argv, 1, len(sys.argv)):
+    network = ipaddress.ip_network(cidr)
+
+    first = ipaddress.ip_address(network.network_address+1)
+    last = ipaddress.ip_address(network.broadcast_address)
+
+    print(f'{cidr}: {first} -> {last}')
