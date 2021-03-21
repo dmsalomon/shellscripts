@@ -1,0 +1,23 @@
+#!/bin/sh
+
+dir="/sys/class/net/${1?}"
+rx="$dir/statistics/rx_bytes"
+tx="$dir/statistics/tx_bytes"
+
+if ! [ -d "$dir" ]; then
+	echo "rx_rate: $1: interface doesn't exist" 1>&2
+	exit 1
+fi
+
+r1=$(cat "$rx")
+t1=$(cat "$tx")
+while :; do
+	sleep 1
+	r2=$(cat "$rx")
+	t2=$(cat "$tx")
+	rr="$(numfmt --to=iec-i --suffix='B/s' --padding=10 $((r2-r1)))"
+	tr="$(numfmt --to=iec-i --suffix='B/s' --padding=10 $((t2-t1)))"
+	printf '\r\033[Krx: %s\ttx: %s' "$rr" "$tr"
+	r1="$r2"
+	t1="$t2"
+done
