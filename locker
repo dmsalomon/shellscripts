@@ -2,10 +2,10 @@
 killall xss-lock >/dev/null 2>&1 ||
 	case "$(hostname)" in
 	tini)
-		xss-lock slock
+		exec xss-lock slock
 		;;
 	deuce)
-		xss-lock -l ~/.config/i3/transfer-sleep-lock-generic-delay.sh
+		exec xss-lock -l ~/.config/i3/transfer-sleep-lock-generic-delay.sh
 		;;
 	esac
 
