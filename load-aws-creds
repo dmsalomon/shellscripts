@@ -1,0 +1,58 @@
+#!/usr/bin/env python3
+
+import os
+import os.path
+import subprocess
+import sys
+from typing import Optional
+
+from botocore.credentials import create_credential_resolver, JSONFileCache  # type: ignore
+from botocore.exceptions import SSOTokenLoadError, UnauthorizedSSOTokenError  # type: ignore
+from botocore.session import Session  # type: ignore
+
+CACHE_DIR: str = os.path.expanduser(os.path.join("~", ".aws", "cli", "cache"))
+
+
+def export_var(name: str, value: Optional[str]):
+    value = value or ""
+    print(name, value)
+    os.putenv(name, value)
+
+
+def sso_login() -> bool:
+    try:
+        subprocess.run("aws sso login >&2", shell=True, check=True)
+    except (subprocess.CalledProcessError, KeyboardInterrupt):
+        print("SSO login failed", file=sys.stderr)
+        return False
+    return True
+
+
+def main() -> int:
+    prof = (
+        os.getenv("AWS_PROFILE") or os.getenv("AWS_DEFAULT_PROFILE") or "yieldx_admin"
+    )
+    session = Session(profile=prof)
+    cache = JSONFileCache(CACHE_DIR)
+    for _ in range(3):
+        try:
+            resolver = create_credential_resolver(session, cache=cache)
+            creds = resolver.load_credentials()
+            region = session.get_scoped_config()["region"]
+            export_var("AWS_ACCESS_KEY_ID", creds.access_key)
+            export_var("AWS_SECRET_ACCESS_KEY", creds.secret_key)
+            export_var("AWS_SESSION_TOKEN", creds.token)
+            export_var("AWS_REGION", region)
+        except (SSOTokenLoadError, UnauthorizedSSOTokenError):
+            if not sso_login():
+                return 1
+        else:
+            print(f"fetched credentials for profile {session.profile}", file=sys.stderr)
+            return 0
+
+    print(f"failed to fetch credentials for profile {session.profile}", file=sys.stderr)
+    return 2
+
+
+if __name__ == "__main__":
+    sys.exit(main())
