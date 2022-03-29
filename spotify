@@ -1,4 +1,0 @@
-#!/bin/sh
-spotify="$(which -a spotify | sed -n 2p)"
-[ -n "$spotify" ] || exit
-exec fdsf "$spotify"
