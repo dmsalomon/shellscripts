@@ -3,28 +3,25 @@
 from datetime import datetime
 from time import sleep
 import sys
+from termios import tcgetattr, tcsetattr, TCSADRAIN
 import termios
+from contextlib import contextmanager
 
-CR = "\r\033[K" # ]
+CR = "\r\033[K"  # ]
 
-class TerminalState:
-    def __init__(self, pty=None):
-        self.pty = pty or 0 # 0 for STDIN_FILENO
-        self.flags = termios.tcgetattr(self.pty)
-        self._restored = False
 
-    def echoctl_off(self):
-        flags = self.flags.copy()
-        flags[3] &= ~termios.ECHOCTL
-        termios.tcsetattr(self.pty, termios.TCSADRAIN, flags)
+@contextmanager
+def no_echoctl(*, pty=None):
+    pty = pty or 0  # 0 for STDIN_FILENO
+    oflags = tcgetattr(pty)
+    flags = oflags.copy()
+    flags[3] &= ~termios.ECHOCTL
+    tcsetattr(pty, TCSADRAIN, flags)
+    try:
+        yield
+    finally:
+        tcsetattr(pty, TCSADRAIN, oflags)
 
-    def restore(self):
-        if not self._restored:
-            termios.tcsetattr(self.pty, termios.TCSADRAIN, self.flags)
-            self._restored = True
-
-    def __del__(self):
-        self.restore()
 
 def main():
     start = datetime.now()
@@ -34,13 +31,12 @@ def main():
         sys.stdout.write(f"{CR}{delta}")
         sleep(0.005)
 
-if __name__ == "__main__":
-    term_state = TerminalState()
-    try:
-        term_state.echoctl_off()
-        main()
-    except KeyboardInterrupt:
-        pass
-    finally:
-        print()
 
+if __name__ == "__main__":
+    with no_echoctl():
+        try:
+            main()
+        except KeyboardInterrupt:
+            pass
+        finally:
+            print()
